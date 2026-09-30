@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survei Kewirausahaan Murid</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <style>
+    :root {
+      --primary-blue: #1a73e8;
+      --hover-blue: #155db1;
+      --light-bg: #f4f7f9;
+      --border-color: #e0e6ed;
+      --text-main: #334155;
+      --text-muted: #64748b;
+    }
+
+    body { 
+      background-color: var(--light-bg); 
+      padding: 30px 15px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      color: var(--text-main);
+    }
+
+    .survey-container { 
+      background-color: #ffffff; 
+      padding: 40px 40px; 
+      border-radius: 12px; 
+      box-shadow: 0 8px 24px rgba(149, 157, 165, 0.15); 
+      max-width: 850px; 
+      margin: auto; 
+      border-top: 6px solid var(--primary-blue);
+    }
+
+    .header-title { color: var(--primary-blue); font-weight: 700; font-size: 2rem;}
+    .header-subtitle { color: var(--text-muted); font-size: 1.1rem; }
+    
+    .section-title {
+      border-bottom: 2px solid var(--light-bg);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      color: var(--primary-blue);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+    .section-title i { margin-right: 10px; font-size: 1.3rem; }
+
+    .identity-card {
+      background-color: #ffffff;
+      padding: 0;
+      margin-bottom: 35px;
+    }
+
+    .form-label { font-weight: 600; color: var(--text-main); }
+    .form-label i { color: var(--primary-blue); margin-right: 6px; }
+    
+    .form-control, .form-select {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 15px;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 0.25rem rgba(26, 115, 232, 0.15);
+    }
+
+    .question-card { 
+      background: #ffffff;
+      margin-bottom: 20px; 
+      padding: 20px 0; 
+      border-bottom: 1px dashed var(--border-color);
+    }
+    .question-card:last-child { border-bottom: none; }
+    .question-text { font-weight: 600; color: var(--text-main); margin-bottom: 15px; font-size: 1.05rem;}
+    
+    .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    .radio-label { flex: 1; min-width: 100px; position: relative; cursor: pointer; }
+    .radio-label input { display: none; }
+    .radio-box {
+      display: block; padding: 10px; text-align: center; border: 2px solid var(--border-color);
+      border-radius: 8px; background: #ffffff; color: var(--text-muted); font-weight: 600; 
+      transition: all 0.2s ease;
+    }
+    .radio-label input:checked + .radio-box {
+      background: var(--primary-blue); color: white; border-color: var(--primary-blue);
+      box-shadow: 0 4px 10px rgba(26, 115, 232, 0.3);
+    }
+    .radio-label input:hover:not(:checked) + .radio-box {
+      background: var(--light-bg); border-color: #cbd5e1; color: var(--primary-blue);
+    }
+
+    .scale-info { 
+      font-size: 0.9em; background: #f0f7ff; padding: 15px; 
+      border-radius: 8px; color: var(--primary-blue); margin-bottom: 25px;
+      border: 1px solid #cce3ff;
+      display: flex; align-items: center;
+    }
+    .scale-info i { font-size: 1.5rem; margin-right: 15px; }
+    
+    .btn-submit { 
+      background-color: var(--primary-blue); border: none; padding: 14px; 
+      font-size: 1.1rem; font-weight: 600; border-radius: 8px; 
+      transition: background-color 0.3s;
+    }
+    .btn-submit:hover { background-color: var(--hover-blue); }
+
+    /* CSS Khusus Mode Cetak (Print) */
+    @media print {
+      body { background: white; margin: 0; padding: 0; }
+      .survey-container { box-shadow: none; max-width: 100%; padding: 0; border: none;}
+      .no-print { display: none !important; }
+      .table { border: 1px solid #000; }
+      .table th, .table td { border: 1px solid #000 !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="survey-container" id="mainContainer">
+  <div class="text-center mb-5" id="mainHeader">
+    <i class="bi bi-ui-checks text-primary mb-3" style="font-size: 3.5rem; color: var(--primary-blue) !important;"></i>
+    <h2 class="header-title mt-2">Survei Kompetensi Kewirausahaan</h2>
+    <p class="header-subtitle">Melalui Pemanfaatan Kantin sebagai Laboratorium Mini Pembelajaran</p>
+  </div>
+  
+  <form id="surveyForm">
+    <h4 class="section-title"><i class="bi bi-person-vcard"></i> Data Diri</h4>
+    <div class="identity-card">
+      <div class="row g-4">
+        <div class="col-md-12">
+          <label class="form-label"><i class="bi bi-person-fill"></i>Nama Lengkap</label>
+          <input type="text" class="form-control" name="nama" placeholder="Masukkan nama lengkap" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label"><i class="bi bi-buildings-fill"></i>Kelas</label>
+          <select class="form-select" name="kelas" required>
+            <option value="" selected disabled>Pilih Kelas...</option>
+            <option value="XI AKL 1">XI AKL 1</option>
+            <option value="XI AKL 2">XI AKL 2</option>
+            <option value="XI AKL 3">XI AKL 3</option>
+            <option value="XI DKV 1">XI DKV 1</option>
+            <option value="XI DKV 2">XI DKV 2</option>
+            <option value="XI DKV 3">XI DKV 3</option>
+            <option value="XI BUSANA 1">XI BUSANA 1</option>
+            <option value="XI BUSANA 2">XI BUSANA 2</option>
+            <option value="XI BUSANA 3">XI BUSANA 3</option>
+            <option value="XI PM 1">XI PM 1</option>
+            <option value="XI PM 2">XI PM 2</option>
+            <option value="XI MPLB 1">XI MPLB 1</option>
+            <option value="XI MPLB 2">XI MPLB 2</option>
+            <option value="XI ULP 1">XI ULP 1</option>
+            <option value="XI ULP 2">XI ULP 2</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label"><i class="bi bi-calendar-date-fill"></i>Tanggal Pengisian</label>
+          <input type="date" class="form-control" name="tanggal" id="tanggalInput" required>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="section-title mt-5"><i class="bi bi-list-check"></i> Kuesioner</h4>
+    <div class="scale-info mb-4">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        <strong>Keterangan Skala:</strong><br>
+        <strong>1</strong> = Belum mampu / Sangat tidak setuju &nbsp;|&nbsp; 
+        <strong>2</strong> = Mulai mampu / Tidak setuju &nbsp;|&nbsp; 
+        <strong>3</strong> = Mampu / Setuju &nbsp;|&nbsp; 
+        <strong>4</strong> = Sangat mampu / Sangat setuju
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        "Saya memahami konsep kewirausahaan.",
+        "Saya mampu mengenali peluang usaha di lingkungan sekitar.",
+        "Saya mampu menentukan target konsumen suatu produk.",
+        "Saya mampu menghitung modal yang diperlukan untuk menjalankan usaha.",
+        "Saya mampu menentukan harga jual produk berdasarkan biaya dan keuntungan yang diharapkan.",
+        "Saya mampu melakukan promosi produk secara menarik.",
+        "Saya mampu melakukan pencatatan transaksi usaha dengan tertib.",
+        "Saya mampu menghitung keuntungan atau kerugian dari kegiatan usaha.",
+        "Saya mampu bekerja sama dalam kelompok untuk menjalankan kegiatan usaha.",
+        "Saya berani dan percaya diri dalam melayani konsumen."
+      ];
+
+      for (let i = 0; i < questions.length; i++) {
+        document.write(`
+          <div class="question-card">
+            <div class="question-text">${i + 1}. ${questions[i]}</div>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="q${i+1}" value="1" required>
+                <span class="radio-box">1</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="q${i+1}" value="2">
+                <span class="radio-box">2</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="q${i+1}" value="3">
+                <span class="radio-box">3</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="q${i+1}" value="4">
+                <span class="radio-box">4</span>
+              </label>
+            </div>
+          </div>
+        `);
+      }
+    </script>
+
+    <button type="submit" class="btn btn-primary w-100 mt-5 btn-submit" id="submitBtn">
+      <i class="bi bi-send-fill me-2"></i>Kirim Jawaban Survei
+    </button>
+  </form>
+
+  <!-- Result Section -->
+  <div id="resultSection" class="mt-4 d-none">
+    <div class="p-4 p-md-5 bg-white rounded-3">
+      <div class="text-center mb-4">
+        <i class="bi bi-check-circle-fill text-success no-print" style="font-size: 4rem;"></i>
+        <h3 class="text-success mt-3 mb-2 no-print" style="font-weight: 700;">Survei Berhasil Dikirim!</h3>
+        <h3 class="d-none d-print-block mt-4" style="color: var(--primary-blue); font-weight: bold;">Hasil Survei Kompetensi Kewirausahaan</h3>
+        <p class="text-muted no-print fs-5">Terima kasih, <span id="namaDisplay" class="fw-bold" style="color: var(--primary-blue);"></span>. Jawabanmu telah direkam.</p>
+        <p class="d-none d-print-block text-muted">Nama: <span id="namaPrint" class="fw-bold"></span> | Kelas: <span id="kelasPrint" class="fw-bold"></span></p>
+      </div>
+      
+      <hr style="border-color: var(--border-color);">
+      
+      <div class="row mt-4 mb-5 text-center">
+        <div class="col-6 border-end">
+          <div class="d-flex flex-column align-items-center">
+            <i class="bi bi-award text-warning mb-2" style="font-size: 2rem;"></i>
+            <h6 class="text-muted text-uppercase" style="letter-spacing: 1px; font-size: 0.8rem;">Total Skor</h6>
+            <h1 style="color: var(--primary-blue); font-weight: 800;" id="scoreDisplay"></h1>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="d-flex flex-column align-items-center">
+            <i class="bi bi-tags text-info mb-2" style="font-size: 2rem;"></i>
+            <h6 class="text-muted text-uppercase" style="letter-spacing: 1px; font-size: 0.8rem;">Kategori</h6>
+            <h3 class="text-info mt-2" style="font-weight: 700;" id="categoryDisplay"></h3>
+          </div>
+        </div>
+      </div>
+      
+      <h5 class="mt-4 mb-3" style="color: var(--text-main);"><i class="bi bi-bar-chart-steps me-2" style="color: var(--primary-blue);"></i>Rincian Skor:</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead style="background-color: var(--light-bg);">
+            <tr>
+              <th width="5%" class="text-center py-3">No</th>
+              <th width="80%" class="py-3">Aspek yang Diukur</th>
+              <th width="15%" class="text-center py-3">Skor</th>
+            </tr>
+          </thead>
+          <tbody id="detailTableBody">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex justify-content-center gap-3 mt-5 no-print">
+        <button class="btn btn-outline-primary px-4 py-2 fw-bold" onclick="location.reload()">
+          <i class="bi bi-arrow-clockwise me-2"></i>Isi Survei Baru
+        </button>
+        <button class="btn btn-primary px-4 py-2 fw-bold" onclick="window.print()">
+          <i class="bi bi-printer-fill me-2"></i>Cetak Hasil
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="text-center mt-5 pt-4 border-top text-secondary" style="font-size: 0.9rem; border-color: var(--border-color) !important;">
+    <i class="bi bi-building me-1"></i> Instrumen ini dikembangkan oleh <strong>Kurikulum SMK N 1 Karanganyar</strong>
+  </div>
+
+</div>
+
+<script>
+  // Mengisi tanggal otomatis dengan hari ini
+  document.getElementById('tanggalInput').valueAsDate = new Date();
+
+  // GANTI TEKS DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwmS4TNeYpFcWCIk8kX7AYVJ71VQbIJq04m6B_RqPt1y0EBvrdLg6hgb6ajxK1GXcHBMg/exec';
+  
+  const form = document.getElementById('surveyForm');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!form.checkValidity()) return;
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Memproses data...';
+
+    // Mengirim data ke Google Script via Fetch API
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 'success') {
+          updateUI(data);
+        } else {
+          throw new Error('Server error');
+        }
+      })
+      .catch(error => {
+        alert("Terjadi kesalahan saat mengirim data. Silakan periksa koneksi Anda dan pastikan URL Web App sudah benar.");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-send-fill me-2"></i>Kirim Jawaban Survei';
+      });
+  });
+
+  function updateUI(response) {
+    document.getElementById('surveyForm').classList.add('d-none');
+    document.getElementById('mainHeader').classList.add('no-print'); 
+    
+    const resultSection = document.getElementById('resultSection');
+    resultSection.classList.remove('d-none');
+    
+    document.getElementById('namaDisplay').innerText = response.nama;
+    document.getElementById('namaPrint').innerText = response.nama;
+    document.getElementById('kelasPrint').innerText = response.kelas;
+    
+    document.getElementById('scoreDisplay').innerText = `${response.score} / 40`;
+    document.getElementById('categoryDisplay').innerText = response.kategori;
+    
+    const tbody = document.getElementById('detailTableBody');
+    tbody.innerHTML = '';
+    
+    const aspekLabels = [
+      "Pemahaman konsep kewirausahaan",
+      "Kemampuan mengenali peluang usaha",
+      "Kemampuan menentukan target konsumen",
+      "Kemampuan menghitung modal",
+      "Kemampuan menentukan harga jual",
+      "Kemampuan melakukan promosi",
+      "Kemampuan melakukan pencatatan transaksi",
+      "Kemampuan menghitung keuntungan",
+      "Kemampuan bekerja dalam kelompok",
+      "Keberanian melayani konsumen"
+    ];
+
+    for(let i = 0; i < response.responses.length; i++) {
+      tbody.innerHTML += `
+        <tr>
+          <td class="text-center text-muted">${i + 1}</td>
+          <td style="font-weight: 500;">${aspekLabels[i]}</td>
+          <td class="text-center fw-bold fs-5" style="color: var(--primary-blue);">${response.responses[i]}</td>
+        </tr>
+      `;
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
